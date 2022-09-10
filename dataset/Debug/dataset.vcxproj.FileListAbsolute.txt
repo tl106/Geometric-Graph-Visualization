@@ -1,0 +1,2 @@
+C:\Users\xcs\source\repos\dataset\Debug\dataset.exe
+C:\Users\xcs\source\repos\dataset\Debug\dataset.pdb

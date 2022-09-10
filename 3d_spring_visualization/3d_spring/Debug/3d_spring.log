@@ -1,0 +1,4 @@
+﻿  源.cpp
+C:\Users\86189\source\repos\3d_spring\3d_spring\源.cpp(13,1): warning C4005: “INFINITE”: 宏重定义
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\um\winbase.h(730): message : 参见“INFINITE”的前一个定义
+  3d_spring.vcxproj -> C:\Users\86189\source\repos\3d_spring\Debug\3d_spring.exe

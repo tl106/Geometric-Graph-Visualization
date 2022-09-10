@@ -1,0 +1,69 @@
+\documentclass[runningheads]{llncs}
+\usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm]{geometry}
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+\usepackage{amsmath}
+
+\floatname{algorithm}{algorithm}
+\renewcommand{\algorithmicrequire}{\textbf{input:}}
+\renewcommand{\algorithmicensure}{\textbf{output:}}
+
+\begin{document}
+
+\section{Algorithm}
+
+% \begin{document}
+    \begin{algorithm}
+        \caption{Degree First}
+        \begin{algorithmic}[1]
+            \Require 
+                $d[n][n]$:distance between each pair of vertices
+            \Ensure
+                $p[n][3]$:position of vertices
+            
+            \Function{Init}{$d[n][n]$}
+                \State sort the vertices in descending order depending on the degree of each vertices(degree is the number of connected lines for each vertex) and generate $desc[n]$ array
+                \State initialize $state[n]$ array which describes the current state of each vertex:0 represents unplaced vertices, 1 represents vertices that have been placed but not moved, and 2 represents vertices that have been moved
+                \State take out the first element in $desc[n]$ array, and put it on the (0,0,0), in addition, change the state of this vertex into 1
+            \EndFunction
+            \State
+            \Function{Main}{$d[n][n],state[n],desc[n]$}
+                \For{$i=0 \to n-1$}
+                    \State $p$ $\gets$ find the first vertex in $state[n]$ whose state is 1
+                    \State $p_x \gets position[p_(index)][0]$
+                    \State $p_y \gets position[p_(index)][1]$
+                    \State $p_z \gets position[p_(index)][2]$
+                    \State $degree_(current)$ $\gets$ find the number of vertices whose state is 1 or 2 which connected with $p$  
+                    \For{$j=0 \to 100$}
+                        \For{$k=0 \to degree_(current)$}
+                            \State $c_x$ $\gets$ position[$degree_(current)$][0]
+                            \State $c_y$ $\gets$ position[$degree_(current)$][1]
+                            \State $c_z$ $\gets$ position[$degree_(current)$][2]
+                            \State $rate$ $\gets$ 0.1
+                            
+                            \State $p_x \gets p_x + rate \times \sqrt{(c_x - p_x)^2+(c_y - p_y)^2+(c_y - p_y)^2} - \frac {d[p_(index)][degree_(current)]\times (c_x - p_x)} {\sqrt{(c_x - p_x)^2+(c_y - p_y)^2+(c_y - p_y)^2}}$
+                            \State $p_y \gets p_y + rate \times \sqrt{(c_x - p_x)^2+(c_y - p_y)^2+(c_y - p_y)^2} - \frac {d[p_(index)][degree_(current)]\times (c_y - p_y)} {\sqrt{(c_x - p_x)^2+(c_y - p_y)^2+(c_y - p_y)^2}}$
+                            \State $p_z \gets p_z + rate \times \sqrt{(c_x - p_x)^2+(c_y - p_y)^2+(c_y - p_y)^2} - \frac {d[p_(index)][degree_(current)]\times (c_z - p_z)} {\sqrt{(c_x - p_x)^2+(c_y - p_y)^2+(c_y - p_y)^2}}$
+                        \EndFor
+                    \EndFor
+                    \State $position[p_(index)][0] \gets p_x$
+                    \State $position[p_(index)][1] \gets p_y$
+                    \State $position[p_(index)][2] \gets p_z$
+                \EndFor
+                \State find every vertices which are connected with the $p$ and haven't been processed, put them randomly around the $p$, the distance between them to $p$ depends on $d[n][n]$. In addition, change the state of these vertices to 2 in $state[n]$ array. 
+            \EndFunction
+            
+        \end{algorithmic}
+    \end{algorithm}
+% \end{document}
+\paragraph{}
+The purpose of algorithm is to minimize the error between the total actual distance and total ideal distance. To satisfy it, we put vertices on the canvas in some sequence. The general idea is to put the vertex with the larger degree on the canvas. We first move the position of this vertex and expand it.
+\paragraph{}
+As for the movement, we find the correlation vertex of the current vertex (the correlation vertex is the vertex directly connected with the current vertex and has been on the canvas). If the vertex has no related vertices, skip this movement step; if the vertex has related vertices, the indices of the related vertices will be put into a temporary array, and one related vertex will be taken from the temporary array each time. The actual distance between the related vertex and the current vertex will be calculated and compared with the ideal distance (ideal distance is recorded in the distance relation array). If the actual distance is greater than the ideal distance, change the position of the current vertex, move the current vertex toward the relevant vertex along straight line of two vertices (the ratio of the moving distance can be set by the operator); if the actual distance is less than the ideal distance, change the position of the current vertex and move the current vertex away from the related vertex along straight line of two vertices; if the actual distance is equal to the ideal distance, current vertex doesn't move. After traversing the temporary array, movement step will repeat several times (the repetition number can be set by the operator). After moving the current vertex many times, the vertex position is determined and recorded in the position array.
+\paragraph{}
+As for the expansion, we find the vertices that are directly connected to the current vertex and haven't been on the canvas. If there are no vertices that meet the requirements, skip this expansion step; if there are vertices that meet the requirements, they will be randomly placed on the sphere with the current vertex as the center and the respective ideal distance as the radius according to the ideal distance from the current vertex.
+\paragraph{}
+When all vertices are moved and expended, the operation ends.
+
+\end{document}
